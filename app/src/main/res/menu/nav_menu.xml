@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_assign"
+            android:title="Assign Duty"/>
+        <item
+            android:id="@+id/nav_post"
+            android:title="Post attedence"/>
+        <item
+            android:id="@+id/nav_view"
+            android:title="View Attedence"/>
+        <item
+            android:id="@+id/nav_about"
+            android:title="Profile"/>
+
+    </group>
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/baseline_logout_24"
+                android:title="Logout"/>
+
+        </menu>
+    </item>
+
+</menu>
