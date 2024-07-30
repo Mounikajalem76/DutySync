@@ -10,14 +10,11 @@
             android:id="@+id/nav_assign"
             android:title="Assign Duty"/>
         <item
-            android:id="@+id/nav_post"
-            android:title="Post attedence"/>
+            android:id="@+id/nav_postatten"
+            android:title="Post attendence"/>
         <item
-            android:id="@+id/nav_view"
-            android:title="View Attedence"/>
-        <item
-            android:id="@+id/nav_about"
-            android:title="Profile"/>
+            android:id="@+id/nav_viewatten"
+            android:title="View Attendence"/>
 
     </group>
     <item android:title="">

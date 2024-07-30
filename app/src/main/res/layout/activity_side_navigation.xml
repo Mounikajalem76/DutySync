@@ -7,6 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:layout_gravity="center"
     tools:context=".SideNavigation"
     tools:openDrawer="start">
 
@@ -30,13 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
-<com.google.android.material.navigation.NavigationView
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/nav_view"
         android:layout_gravity="start"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
         app:headerLayout="@layout/nav_header"
-        app:itemIconTint="#72bd00"
-        app:itemTextColor="#ffbb00"
-        app:menu="@menu/nav_menu" />
-    </androidx.drawerlayout.widget.DrawerLayout>
+        app:menu="@menu/nav_menu"
+        app:itemIconTint="#3A8C3D"
+        app:itemTextColor="#ffbb00"/>
+</androidx.drawerlayout.widget.DrawerLayout>
