@@ -62,15 +62,16 @@
                 android:backgroundTint="#72bd00"
                 android:drawablePadding="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <Button
-            android:layout_width="260dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/btn"
-            android:layout_marginTop="30dp"
-            android:textSize="20dp"
-            android:id="@+id/signin"
-            android:text="SignIn"/>
+            <Button
+                android:layout_width="260dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="20dp"
+                android:background="@drawable/btn"
+                android:id="@+id/signin"
+                android:text="SignIn"/>
+
     </LinearLayout>
 
 </LinearLayout>

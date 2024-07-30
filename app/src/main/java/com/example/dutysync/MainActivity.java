@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -43,12 +44,65 @@ public class MainActivity extends AppCompatActivity {
                 if (!validateUsername() | !validatePassword()){
 
                 }else {
-                    checkUser();
+                   // checkUser();
+                    checkUserNew();
                 }
             }
         });
 
     }
+
+    private void checkUserNew() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String userUsername = editText_username.getText().toString().trim();
+                String userPassword = editText_password.getText().toString().trim();
+
+                if (snapshot.exists()) {
+                    boolean userFound = false;
+
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                      //  String username = userSnapshot.child("name").getValue(String.class);
+                        String username = userSnapshot.getKey();
+
+                        if (username != null && username.equals(userUsername)) {
+                            userFound = true;
+                            String password = userSnapshot.child("password").getValue(String.class);
+
+                            if (password != null && password.equals(userPassword)) {
+                                // Successful login
+                                editText_username.setError(null);
+                                Intent intent = new Intent(MainActivity.this, SideNavigation.class);
+                                startActivity(intent);
+                            } else {
+                                // Invalid password
+                                editText_password.setError("Invalid Credentials");
+                                editText_password.requestFocus();
+                            }
+                            break; // Stop loop as we found the user
+                        }
+                    }
+
+                    if (!userFound) {
+                        // Username not found
+                        Toast.makeText(MainActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(MainActivity.this, "No users exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle possible errors.
+            }
+        });
+    }
+
+
     public Boolean validateUsername(){
         String val=editText_username.getText().toString();
         if (val.isEmpty()){
@@ -74,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
         String userUsername=editText_username.getText().toString().trim();
         String userPassword=editText_password.getText().toString().trim();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase=reference.orderByChild("username").equalTo(userUsername);
-
+        Query checkUserDatabase=reference.orderByChild("Divya").equalTo(userUsername);
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -91,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                         editText_password.requestFocus();
                     }
                 }else {
-                    editText_username.setError("Invalid Credentials");
+                    editText_username.setError("Invalid Not Credentials");
                     editText_username.requestFocus();
 
                 }
