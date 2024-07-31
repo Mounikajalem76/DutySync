@@ -1,5 +1,6 @@
 package com.example.dutysync;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
@@ -19,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 public class SideNavigation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     androidx.appcompat.widget.Toolbar toolbar;
+    AlertDialog.Builder builder;
 
 
     @Override
@@ -28,6 +31,7 @@ public class SideNavigation extends AppCompatActivity implements NavigationView.
 
         toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        builder=new AlertDialog.Builder(this);
 
         drawerLayout=findViewById(R.id.drawer_layout);
         NavigationView navigationView=findViewById(R.id.nav_view);
@@ -61,9 +65,25 @@ public class SideNavigation extends AppCompatActivity implements NavigationView.
             return true;
 
         } else if (id==R.id.nav_logout) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Logout()).commit();
+            builder.setTitle("Alert")
+                    .setMessage("Do you want to Logout")
+                    .setCancelable(true)
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent=new Intent(SideNavigation.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .show();
             return true;
-
         }drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

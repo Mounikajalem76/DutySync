@@ -7,7 +7,7 @@
     android:padding="16dp"
     android:background="#72bd00"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:layout_height="176dp">
+    android:layout_height="200dp">
 
     <LinearLayout
         android:layout_width="match_parent"

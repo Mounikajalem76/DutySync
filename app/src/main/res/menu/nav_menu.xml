@@ -8,13 +8,15 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_assign"
-            android:title="Assign Duty"/>
+            android:title="Assign Duty"
+            />
         <item
             android:id="@+id/nav_postatten"
-            android:title="Post attendence"/>
+            android:title="Post attendance"
+            />
         <item
             android:id="@+id/nav_viewatten"
-            android:title="View Attendence"/>
+            android:title="View Attendance"/>
 
     </group>
     <item android:title="">
