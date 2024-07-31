@@ -12,20 +12,41 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="240dp">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assign Duty"
+            android:textColor="#72bd00"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="30dp"/>
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp">
-            <EditText
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="50dp"
+            android:gravity="center"
+            android:hint="Select name"
+            android:textColorHint="#72bd00"
+            android:textStyle="bold">
+
+            <AutoCompleteTextView
+                android:id="@+id/namelist"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Select Name"
-                android:id="@+id/dropdown"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
                 android:inputType="none"
-                android:drawableEnd="@drawable/baseline_arrow_drop_down_24"/>
+                android:textColor="#72bd00"
+                android:textColorHint="#72bd00"
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,14 +57,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginStart="50dp"
+            android:hint="Select Date"
+            android:textColorHint="#72bd00"
+            android:gravity="center"
             android:layout_marginEnd="50dp">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Select Name"
                 android:id="@+id/datepicker"
                 android:visibility="visible"
-                android:inputType="none"
+                android:inputType="date"
+                android:focusable="false"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:focusableInTouchMode="true"
                 android:drawableEnd="@drawable/baseline_date_range_24"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button

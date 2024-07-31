@@ -1,20 +1,100 @@
 package com.example.dutysync;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class Viewattendence extends Fragment {
+    View view;
+    EditText editText_date;
+    Button button_show;
+    TextView textView_serial,textView_name,textView_date,textView_attendance;
+    Calendar mycalendar=Calendar.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_viewattendence, container, false);
+        view= inflater.inflate(R.layout.fragment_viewattendence, container, false);
+        editText_date= (EditText) view.findViewById(R.id.show_datepicker);
+        button_show= (Button) view.findViewById(R.id.show);
+        textView_serial= (TextView) view.findViewById(R.id.serialnum);
+        textView_name= (TextView) view.findViewById(R.id.name);
+        textView_serial= (TextView) view.findViewById(R.id.serialnum);
+        textView_serial= (TextView) view.findViewById(R.id.serialnum);
+
+
+        editText_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        mycalendar.set(Calendar.YEAR,i);
+                        mycalendar.set(Calendar.MONTH,i1);
+                        mycalendar.set(Calendar.DAY_OF_MONTH,i2);
+
+                        String myFormat="dd-MMM-yyyy";
+                        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+                        editText_date.setText(dateFormat.format(mycalendar.getTime()));
+                    }
+                }, mycalendar.get(Calendar.YEAR), mycalendar.get(Calendar.MONTH), mycalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        button_show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String date=editText_date.getText().toString();
+                if (date.isEmpty()){
+                    editText_date.setError("Please Select Date");
+                }else {
+                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("AssignDuty").child(date);
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()){
+                                for (DataSnapshot dateSnapshot : snapshot.getChildren()){
+                                    String datePicking=dateSnapshot.getKey();
+                                   // Toast.makeText(getContext(), ""+datePicking, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getContext(), "DataStoring Failed"+error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                    Toast.makeText(getContext(), " Attendance Data Display", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+        return view;
     }
 }

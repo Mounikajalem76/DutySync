@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     EditText editText_username,editText_password;
     Button button_signin;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +36,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         editText_username= (EditText) findViewById(R.id.username);
         editText_password= (EditText) findViewById(R.id.password);
+        progressBar= (ProgressBar) findViewById(R.id.progressBar);
         button_signin= (Button) findViewById(R.id.signin);
 
 
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 if (!validateUsername() | !validatePassword()){
+                    progressBar.setVisibility(View.GONE);
 
                 }else {
                    // checkUser();
@@ -75,10 +80,13 @@ public class MainActivity extends AppCompatActivity {
                                 editText_username.setError(null);
                                 Intent intent = new Intent(MainActivity.this, SideNavigation.class);
                                 startActivity(intent);
+                                progressBar.setVisibility(View.GONE);
+                               // Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                             } else {
                                 // Invalid password
                                 editText_password.setError("Invalid Credentials");
                                 editText_password.requestFocus();
+                                progressBar.setVisibility(View.GONE);
                             }
                             break; // Stop loop as we found the user
                         }
@@ -87,10 +95,12 @@ public class MainActivity extends AppCompatActivity {
                     if (!userFound) {
                         // Username not found
                         Toast.makeText(MainActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
 
                 } else {
                     Toast.makeText(MainActivity.this, "No users exist", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
