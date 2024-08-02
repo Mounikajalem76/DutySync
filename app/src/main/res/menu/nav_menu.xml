@@ -8,14 +8,17 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_assign"
+            android:icon="@drawable/baseline_add_task_24"
             android:title="Assign Duty"
             />
         <item
             android:id="@+id/nav_postatten"
+            android:icon="@drawable/baseline_post_add_24"
             android:title="Post attendance"
             />
         <item
             android:id="@+id/nav_viewatten"
+            android:icon="@drawable/baseline_pageview_24"
             android:title="Show Attendance"/>
 
     </group>

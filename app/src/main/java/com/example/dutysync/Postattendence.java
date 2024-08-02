@@ -60,21 +60,6 @@ public class Postattendence extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         editText_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,18 +143,19 @@ public class Postattendence extends Fragment {
             public void onClick(View view) {
                 String name=autoCompleteTextView.getText().toString();
                 String date=editText_date.getText().toString();
-                if (name.isEmpty()){
-                    autoCompleteTextView.setError("Please Select Name");
-                } else if (date.isEmpty()) {
-                    editText_date.setError("Please Select Date");
+                if (date.isEmpty()){
+                    autoCompleteTextView.setError("Please Select Date");
+                } else if (name.isEmpty()) {
+                    editText_date.setError("Please Select Name");
 
                 }else {
+
                     DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("AssignDuty").child(editText_date.getText().toString());
                     reference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             reference.child(name).setValue("Present");
-                            Toast.makeText(getContext(), "Attendance Posted Successfully", Toast.LENGTH_SHORT).show();
+
 
                         }
 
@@ -178,8 +164,13 @@ public class Postattendence extends Fragment {
 
                         }
                     });
+                    //editText_date.getText().clear();
+                    autoCompleteTextView.getText().clear();
+                    Toast.makeText(getContext(), "Attendance Posted Successfully", Toast.LENGTH_SHORT).show();
 
-                          //Toast.makeText(getContext(), name+":"+editText_date.getText().toString(), Toast.LENGTH_SHORT).show();
+
+
+                    //Toast.makeText(getContext(), name+":"+editText_date.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

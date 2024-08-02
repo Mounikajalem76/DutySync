@@ -3,6 +3,7 @@ package com.example.dutysync;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -13,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class Viewattendence extends Fragment {
     Button button_show;
     TextView textView_serial,textView_name,textView_date,textView_attendance;
     Calendar mycalendar=Calendar.getInstance();
+    LinearLayout layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +48,10 @@ public class Viewattendence extends Fragment {
         textView_name= (TextView) view.findViewById(R.id.name);
         textView_serial= (TextView) view.findViewById(R.id.serialnum);
         textView_serial= (TextView) view.findViewById(R.id.serialnum);
+        textView_date=(TextView) view.findViewById(R.id.date);
+        textView_attendance=(TextView) view.findViewById(R.id.attendance);
+        layout=(LinearLayout) view.findViewById(R.id.layout_data);
+
 
 
         editText_date.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +74,11 @@ public class Viewattendence extends Fragment {
         button_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                textView_name.setText("");
+                textView_date.setText("");
+                textView_attendance.setText("");
+                textView_serial.setText("");
                 String date=editText_date.getText().toString();
                 if (date.isEmpty()){
                     editText_date.setError("Please Select Date");
@@ -75,11 +87,26 @@ public class Viewattendence extends Fragment {
                     reference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                             if (snapshot.exists()){
-                                for (DataSnapshot dateSnapshot : snapshot.getChildren()){
-                                    String datePicking=dateSnapshot.getKey();
-                                   // Toast.makeText(getContext(), ""+datePicking, Toast.LENGTH_SHORT).show();
+                                layout.setVisibility(View.VISIBLE);
+                                int i =1;
+                                for (DataSnapshot dateSnapshot : snapshot.getChildren()) {
+                                    String datePicking = dateSnapshot.getKey();
+                                    String valuePicking= (String) dateSnapshot.getValue();
+                                    textView_serial.append(i+"\n");
+                                    textView_name.append(datePicking+"\n");
+                                    textView_date.append(date+"\n");
+                                    textView_attendance.append(valuePicking+"\n");
+                                    //Toast.makeText(getContext(), ""+datePicking, Toast.LENGTH_SHORT).show();
+                                    i++;
+
                                 }
+
+
+                            }else {
+                                Toast.makeText(getContext(), "Date not Found", Toast.LENGTH_SHORT).show();
+                                layout.setVisibility(View.GONE);
                             }
 
                         }
@@ -90,11 +117,16 @@ public class Viewattendence extends Fragment {
 
                         }
                     });
-                    Toast.makeText(getContext(), " Attendance Data Display", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), " Attendance Data Display", Toast.LENGTH_SHORT).show();
 
                 }
+
+
             }
         });
+
         return view;
+
     }
+
 }

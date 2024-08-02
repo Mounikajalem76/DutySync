@@ -87,4 +87,9 @@ public class SideNavigation extends AppCompatActivity implements NavigationView.
         }drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

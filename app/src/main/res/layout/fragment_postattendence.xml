@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:background="@drawable/bg"
@@ -12,20 +13,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="240dp">
+        android:layout_marginTop="200dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Post Attendance"
-            android:textColor="#72bd00"
+            android:textColor="#ffbb00"
             android:textStyle="bold"
             android:layout_gravity="center"
             android:textSize="30dp"/>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:layout_marginStart="50dp"
+            app:boxCornerRadiusTopStart="30dp"
+            app:boxCornerRadiusBottomEnd="30dp"
             android:gravity="center"
             android:hint="Select Date"
             android:textColorHint="#72bd00"
@@ -38,6 +41,7 @@
                 android:focusable="false"
                 android:gravity="center"
                 android:textStyle="bold"
+                android:textColorHint="#72bd00"
                 android:focusableInTouchMode="true"
                 android:drawableEnd="@drawable/baseline_date_range_24"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -46,21 +50,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
+            android:layout_gravity="center"
             android:layout_marginEnd="50dp"
             android:layout_marginTop="10dp"
+            app:boxCornerRadiusTopStart="30dp"
+            app:boxCornerRadiusBottomEnd="30dp"
             android:gravity="center"
             android:hint="Select name"
-            android:textColorHint="#72bd00"
             android:textStyle="bold"
+            android:textColorHint="#72bd00"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:textColorHint="#72bd00"
                 android:id="@+id/post_dropdown"
-                android:textStyle="bold"
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
@@ -71,8 +80,8 @@
 
         <Button
             android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:background="@drawable/btn"
+            android:layout_height="60dp"
+            android:backgroundTint="#72bd00"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:text="Present"

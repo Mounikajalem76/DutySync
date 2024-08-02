@@ -96,6 +96,7 @@ public class Assignduty extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                          name = adapterView.getItemAtPosition(i).toString();
+
                         //Toast.makeText(getContext(), "Select :"+name, Toast.LENGTH_SHORT).show();
 
                     }
@@ -120,15 +121,6 @@ public class Assignduty extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
-
         editText_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,6 +134,8 @@ public class Assignduty extends Fragment {
                         String myFormat="dd-MMM-yyyy";
                         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
                         editText_date.setText(dateFormat.format(mycalendar.getTime()));
+
+
                     }
                 }, mycalendar.get(Calendar.YEAR), mycalendar.get(Calendar.MONTH), mycalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -175,6 +169,8 @@ public class Assignduty extends Fragment {
 
                         }
                     });
+                    autoCompleteTextView.getText().clear();
+                    editText_date.getText().clear();
 
                     Toast.makeText(getContext(), "Duty Assign Successfully", Toast.LENGTH_SHORT).show();
                 }

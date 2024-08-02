@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg"
     android:orientation="vertical"
     tools:context=".Assignduty">
@@ -11,12 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="240dp">
+        android:layout_marginTop="220dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Assign Duty"
-            android:textColor="#72bd00"
+            android:textColor="#ffbb00"
             android:textStyle="bold"
             android:layout_gravity="center"
             android:textSize="30dp"/>
@@ -26,8 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="50dp"
+            app:boxCornerRadiusBottomEnd="30dp"
+           app:boxCornerRadiusTopStart="30dp"
             android:gravity="center"
             android:hint="Select name"
             android:textColorHint="#72bd00"
@@ -42,7 +44,6 @@
                 android:focusableInTouchMode="true"
                 android:gravity="center"
                 android:inputType="none"
-                android:textColor="#72bd00"
                 android:textColorHint="#72bd00"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +59,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginStart="50dp"
             android:hint="Select Date"
+            android:visibility="visible"
             android:textColorHint="#72bd00"
+            app:boxCornerRadiusBottomEnd="30dp"
+            app:boxCornerRadiusTopStart="30dp"
             android:gravity="center"
             android:layout_marginEnd="50dp">
             <EditText
@@ -76,10 +80,10 @@
         </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:background="@drawable/btn"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:backgroundTint="#72bd00"
             android:id="@+id/assign"
             android:visibility="visible"
             android:text="AssignDuty"
