@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/bgd"
+   android:background="@drawable/bg"
     android:layout_height="match_parent"
     tools:context=".Frontpage">
     <TextView
@@ -20,7 +20,20 @@
         android:textColor="#72bd00"
         android:drawablePadding="5dp"
         android:id="@+id/login"
+        android:fontFamily="serif"
         android:drawableEnd="@drawable/baseline_login_24"
         android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="300dp"
+        android:fontFamily="serif"
+        android:text="DutySync"
+        android:textColor="#ffbb00"
+        android:textSize="50dp"
+        android:textStyle="bold"/>
+
 
 </LinearLayout>

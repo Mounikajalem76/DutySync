@@ -18,6 +18,7 @@
         android:textSize="30dp"
         android:textStyle="bold"
         android:textColor="#ffbb00"
+        android:fontFamily="serif"
         android:layout_gravity="center"/>
 
     <LinearLayout

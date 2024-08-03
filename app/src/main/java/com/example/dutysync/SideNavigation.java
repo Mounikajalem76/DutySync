@@ -54,14 +54,17 @@ public class SideNavigation extends AppCompatActivity implements NavigationView.
         int id=item.getItemId();
         if (id==R.id.nav_assign){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Assignduty()).commit();
+            drawerLayout.closeDrawer(GravityCompat.START);
             return true;
 
         } else if (id==R.id.nav_postatten) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Postattendence()).commit();
+            drawerLayout.closeDrawer(GravityCompat.START);
             return true;
 
         } else if (id==R.id.nav_viewatten) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Viewattendence()).commit();
+            drawerLayout.closeDrawer(GravityCompat.START);
             return true;
 
         } else if (id==R.id.nav_logout) {

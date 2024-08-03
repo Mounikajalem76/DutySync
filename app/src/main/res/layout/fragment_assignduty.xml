@@ -19,6 +19,7 @@
             android:textColor="#ffbb00"
             android:textStyle="bold"
             android:layout_gravity="center"
+            android:fontFamily="serif"
             android:textSize="30dp"/>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
