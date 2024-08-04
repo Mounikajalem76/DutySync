@@ -57,7 +57,7 @@ public class Viewattendence extends Fragment {
         editText_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         mycalendar.set(Calendar.YEAR,i);
@@ -79,50 +79,52 @@ public class Viewattendence extends Fragment {
                 textView_date.setText("");
                 textView_attendance.setText("");
                 textView_serial.setText("");
-                String date=editText_date.getText().toString();
-                if (date.isEmpty()){
+                String date = editText_date.getText().toString();
+                if (date.isEmpty()) {
                     editText_date.setError("Please Select Date");
-                }else {
-                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("AssignDuty").child(date);
-                    reference.addValueEventListener(new ValueEventListener() {
+                } else {
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("AssignDuty").child(date);
+
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (isAdded()) {
+                                if (snapshot.exists()) {
+                                    layout.setVisibility(View.VISIBLE);
+                                    int i = 1;
+                                    for (DataSnapshot dateSnapshot : snapshot.getChildren()) {
+                                        String datePicking = dateSnapshot.getKey();
+                                        String valuePicking = (String) dateSnapshot.getValue();
+                                        textView_serial.append(i + "\n");
+                                        textView_name.append(datePicking + "\n");
+                                        textView_date.append(date + "\n");
+                                        textView_attendance.append(valuePicking + "\n");
+                                        //Toast.makeText(getContext(), ""+datePicking, Toast.LENGTH_SHORT).show();
+                                        i++;
 
-                            if (snapshot.exists()){
-                                layout.setVisibility(View.VISIBLE);
-                                int i =1;
-                                for (DataSnapshot dateSnapshot : snapshot.getChildren()) {
-                                    String datePicking = dateSnapshot.getKey();
-                                    String valuePicking= (String) dateSnapshot.getValue();
-                                    textView_serial.append(i+"\n");
-                                    textView_name.append(datePicking+"\n");
-                                    textView_date.append(date+"\n");
-                                    textView_attendance.append(valuePicking+"\n");
-                                    //Toast.makeText(getContext(), ""+datePicking, Toast.LENGTH_SHORT).show();
-                                    i++;
+                                    }
 
+
+                                } else {
+                                    Toast.makeText(getContext(), "Date not Found", Toast.LENGTH_SHORT).show();
+                                    layout.setVisibility(View.GONE);
                                 }
-
-
-                            }else {
-                                Toast.makeText(getContext(), "Date not Found", Toast.LENGTH_SHORT).show();
-                                layout.setVisibility(View.GONE);
                             }
 
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(getContext(), "DataStoring Failed"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                            if (isAdded()) {
+                                Toast.makeText(getContext(), "Data Retrieval Failed" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
 
                         }
                     });
-                    //Toast.makeText(getContext(), " Attendance Data Display", Toast.LENGTH_SHORT).show();
-
                 }
-
-
             }
+
+                    //Toast.makeText(getContext(), " Attendance Data Display", Toast.LENGTH_SHORT).show();
         });
 
         return view;

@@ -1,8 +1,10 @@
 package com.example.dutysync;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -63,7 +65,7 @@ public class Postattendence extends Fragment {
         editText_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         mycalendar.set(Calendar.YEAR,i);
@@ -77,29 +79,28 @@ public class Postattendence extends Fragment {
 
                         List<String> teamList=new ArrayList<>();
                         DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("AssignDuty");
-                        reference.addValueEventListener(new ValueEventListener() {
+                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 //Toast.makeText(getContext(), ""+editText_date.getText().toString(), Toast.LENGTH_SHORT).show();
+                                if (isAdded()){
                                 if (snapshot.exists()){
                                     for (DataSnapshot dateSnapshot : snapshot.getChildren()) {
 
                                         String dateAssin = dateSnapshot.getKey();
                                         if (dateAssin.equals(editText_date.getText().toString())){
-                                            for (DataSnapshot  nameSnapshot: dateSnapshot.getChildren()){
-                                                String nameAssign=nameSnapshot.getKey();
+                                            for (DataSnapshot  nameSnapshot: dateSnapshot.getChildren()) {
+                                                String nameAssign = nameSnapshot.getKey();
                                                 // Toast.makeText(getContext(), ""+nameAssign, Toast.LENGTH_SHORT).show();
                                                 teamList.add(nameAssign);
+                                            }
 
                                             }
 
-                                        }else {
-                                            //Toast.makeText(getContext(), "Date Not Found", Toast.LENGTH_SHORT).show();
                                         }
                                         // Toast.makeText(getContext(), ""+dutyAssin, Toast.LENGTH_SHORT).show();
                                         // teamList.add(name);
                                         //  Toast.makeText(getContext(), "Attending"+teamList, Toast.LENGTH_SHORT).show();
-
                                     }
                                 }
                                 StringBuilder builder=new StringBuilder();
@@ -124,6 +125,9 @@ public class Postattendence extends Fragment {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
+                                if (isAdded()) {
+                                    Toast.makeText(getContext(), "Data failed" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
 
                             }
                         });
@@ -132,8 +136,6 @@ public class Postattendence extends Fragment {
                 }, mycalendar.get(Calendar.YEAR), mycalendar.get(Calendar.MONTH), mycalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
-
 
 
 
@@ -151,23 +153,27 @@ public class Postattendence extends Fragment {
                 }else {
 
                     DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("AssignDuty").child(editText_date.getText().toString());
-                    reference.addValueEventListener(new ValueEventListener() {
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            reference.child(name).setValue("Present");
+                            if (isAdded()) {
+                                reference.child(name).setValue("Present");
+                                autoCompleteTextView.getText().clear();
+                                Toast.makeText(getContext(), "Attendance Posted Successfully", Toast.LENGTH_SHORT).show();
 
 
+                            }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
+                            if (isAdded()){
+                                Toast.makeText(getContext(), "DataStoring Failed" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
 
                         }
                     });
                     //editText_date.getText().clear();
-                    autoCompleteTextView.getText().clear();
-                    Toast.makeText(getContext(), "Attendance Posted Successfully", Toast.LENGTH_SHORT).show();
-
 
 
                     //Toast.makeText(getContext(), name+":"+editText_date.getText().toString(), Toast.LENGTH_SHORT).show();

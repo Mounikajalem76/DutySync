@@ -63,10 +63,11 @@ public class Assignduty extends Fragment {
 
         List<String> teamMembers=new ArrayList<>();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Team members");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+
+                if (isAdded() && snapshot.exists()){
                     for (DataSnapshot degSnapshot : snapshot.getChildren()){
                         String designation=degSnapshot.getKey();
                         //Toast.makeText(getContext(), ""+designation, Toast.LENGTH_SHORT).show();
@@ -106,7 +107,9 @@ public class Assignduty extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Failed"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                if (isAdded()) {
+                    Toast.makeText(getContext(), "Failed" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
 
 
             }
@@ -155,24 +158,27 @@ public class Assignduty extends Fragment {
                     // Toast.makeText(getContext(), "Select :"+date, Toast.LENGTH_SHORT).show();
 
                     DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("AssignDuty").child(date);
-                    reference.addValueEventListener(new ValueEventListener() {
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            reference.child(name).setValue("absent");
-
+                            if (isAdded()) {
+                                reference.child(name).setValue("absent");
+                                autoCompleteTextView.getText().clear();
+                                editText_date.getText().clear();
+                                Toast.makeText(getContext(), "Duty Assign Successfully", Toast.LENGTH_SHORT).show();
+                            }
 
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(getContext(), "DataStoring Failed"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                            if (isAdded()) {
+                                Toast.makeText(getContext(), "DataStoring Failed" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
 
                         }
                     });
-                    autoCompleteTextView.getText().clear();
-                    editText_date.getText().clear();
 
-                    Toast.makeText(getContext(), "Duty Assign Successfully", Toast.LENGTH_SHORT).show();
                 }
             }
         });
