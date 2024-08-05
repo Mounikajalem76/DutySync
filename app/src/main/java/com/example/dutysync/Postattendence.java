@@ -156,13 +156,16 @@ public class Postattendence extends Fragment {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (isAdded()) {
+                            if (snapshot.child(name).exists() && Objects.equals(snapshot.child(name).getValue(String.class), "Present")) {
+                                Toast.makeText(getContext(), "Attendance already posted for this person", Toast.LENGTH_SHORT).show();
+                            } else {
+
                                 reference.child(name).setValue("Present");
                                 autoCompleteTextView.getText().clear();
+                                editText_date.getText().clear();
                                 Toast.makeText(getContext(), "Attendance Posted Successfully", Toast.LENGTH_SHORT).show();
-
-
                             }
+
                         }
 
                         @Override

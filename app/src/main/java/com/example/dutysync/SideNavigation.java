@@ -74,7 +74,7 @@ public class SideNavigation extends AppCompatActivity implements NavigationView.
                     .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent=new Intent(SideNavigation.this, MainActivity.class);
+                            Intent intent=new Intent(SideNavigation.this, Frontpage.class);
                             startActivity(intent);
                             finish();
                         }
