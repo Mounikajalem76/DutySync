@@ -69,7 +69,7 @@ public class SideNavigation extends AppCompatActivity implements NavigationView.
 
         } else if (id==R.id.nav_logout) {
             builder.setTitle("Alert")
-                    .setMessage("Do you want to Logout")
+                    .setMessage("Do you want to SignOut")
                     .setCancelable(true)
                     .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         @Override
@@ -86,13 +86,31 @@ public class SideNavigation extends AppCompatActivity implements NavigationView.
                         }
                     })
                     .show();
+            drawerLayout.closeDrawer(GravityCompat.START);
             return true;
-        }drawerLayout.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        builder.setTitle("Alert")
+                .setMessage("Do you want to SignOut")
+                .setCancelable(true)
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent=new Intent(SideNavigation.this, Frontpage.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                })
+                .show();
     }
 }

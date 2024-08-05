@@ -161,11 +161,14 @@ public class Assignduty extends Fragment {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (isAdded()) {
+                            if (snapshot.hasChild(name)) {
+                                Toast.makeText(getContext(), "Duty has already been Assigned to this person on the selected date ", Toast.LENGTH_SHORT).show();
+                            }else {
                                 reference.child(name).setValue("absent");
                                 autoCompleteTextView.getText().clear();
                                 editText_date.getText().clear();
                                 Toast.makeText(getContext(), "Duty Assign Successfully", Toast.LENGTH_SHORT).show();
+
                             }
 
                         }
